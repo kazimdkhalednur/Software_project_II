@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # my app
+    "accounts.apps.AccountsConfig",
     "products.apps.ProductsConfig",
     # third-party
     "rest_framework",
+    "rest_framework.authtoken",
     "drf_spectacular",
     "corsheaders",
 ]
@@ -94,6 +96,8 @@ DATABASES = {
 }
 
 
+AUTH_USER_MODEL = "accounts.User"
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -143,6 +147,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication"
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
 }

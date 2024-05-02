@@ -79,10 +79,9 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="carts")
-    user = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="carts")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(USER, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
-    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.title}"
+        return f"{self.user.email} - {self.product.title}"

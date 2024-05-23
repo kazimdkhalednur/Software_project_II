@@ -61,6 +61,8 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = uuid4()
+        if not self.price:
+            self.price = self.discount_price
         super().save(*args, **kwargs)
 
 
@@ -82,6 +84,20 @@ class Cart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(USER, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
+    total_price = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
 
     def __str__(self):
         return f"{self.user.email} - {self.product.title}"
+
+    def save(self, *args, **kwargs):
+        self.total_price = self.product.price * self.quantity
+        super().save(*args, **kwargs)
+
+    def get_total(self):
+        return (
+            Cart.objects.only("user", "total_price")
+            .filter(user=self.user)
+            .aggregate(total_price=models.Sum("total_price"))["total_price"]
+        )

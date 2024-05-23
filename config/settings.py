@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     # my app
     "accounts.apps.AccountsConfig",
     "products.apps.ProductsConfig",
+    "orders.apps.OrdersConfig",
     # third-party
     "rest_framework",
     "rest_framework.authtoken",
     "drf_spectacular",
+    "drf_spectacular_sidecar",
     "corsheaders",
 ]
 
@@ -157,6 +159,14 @@ REST_FRAMEWORK = {
 # djagno cors header configuration
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
 
+
+# SSLCommerz Configuration
+SSLCOMMERZ_STORE_ID = config("SSLCOMMERZ_STORE_ID", cast=str)
+SSLCOMMERZ_STORE_PASSWD = config("SSLCOMMERZ_STORE_PASSWD", cast=str)
+SSLCOMMERZ_SESSION_API = config("SSLCOMMERZ_SESSION_API", cast=str)
+SSLCOMMERZ_ORDER_VALIDATION_API = config("SSLCOMMERZ_ORDER_VALIDATION_API", cast=str)
+
+
 if DEBUG:
     REST_FRAMEWORK |= {
         "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -166,6 +176,9 @@ if DEBUG:
         "TITLE": "Bengal Bazaarrio API",
         "VERSION": "1.0.0",
         "SERVE_INCLUDE_SCHEMA": False,
+        "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
+        "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+        "REDOC_DIST": "SIDECAR",
     }
 
 # import local_settings.py

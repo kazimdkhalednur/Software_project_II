@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
@@ -20,6 +21,7 @@ class ProductListSerializer(ModelSerializer):
             "category",
         )
 
+    @extend_schema_field(serializers.CharField)
     def get_category(self, product):
         return product.category.title
 
@@ -72,4 +74,4 @@ class CartListSerializer(ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ["id", "product", "quantity"]
+        fields = ["id", "product", "quantity", "total_price"]

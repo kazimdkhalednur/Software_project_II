@@ -16,7 +16,7 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
     list_filter = ["category", "status"]
-    list_display = ["title", "discount_price", "price", "quantity"]
+    list_display = ["title", "discount_price", "price", "stock"]
 
     class Meta:
         model = Product

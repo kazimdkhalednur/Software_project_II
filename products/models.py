@@ -46,6 +46,7 @@ class Product(models.Model):
         "Discount Price", max_digits=10, decimal_places=2, blank=True, null=True
     )
     stock = models.IntegerField(default=0)
+    sold = models.IntegerField(default=0)
     rating = models.FloatField(default=0.0)
     status = models.CharField(
         max_length=10, choices=Status.choices, default=Status.DRAFT

@@ -37,12 +37,15 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     brand = models.CharField(max_length=255)
-    thumbnail = models.ImageField(upload_to="products/thhumbnails/")
+    thumbnail = models.ImageField(
+        upload_to="products/thhumbnails/", blank=True, null=True
+    )
     description = models.TextField()
     discount_price = models.DecimalField("Price", max_digits=10, decimal_places=2)
-    price = models.DecimalField("Discount Price", max_digits=10, decimal_places=2)
+    price = models.DecimalField(
+        "Discount Price", max_digits=10, decimal_places=2, blank=True, null=True
+    )
     stock = models.IntegerField(default=0)
-    sold = models.IntegerField(default=0)
     rating = models.FloatField(default=0.0)
     status = models.CharField(
         max_length=10, choices=Status.choices, default=Status.DRAFT
